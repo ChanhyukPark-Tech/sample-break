@@ -2,9 +2,12 @@ SndBuf oneMoreTime => dac;
 SndBuf hihat => dac;
 SndBuf kick => dac;
 
+[292432, 401379, 489300] @=> int start[];
+[340000, 447700,513700] @=> int end[];
+
 Hid hid;
 HidMsg msg;
-0 => int device;
+1 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
@@ -12,8 +15,8 @@ if(!hid.openKeyboard(device)){
 }
 
 
-int start[3];
-int end[3];
+//int start[3];
+//int end[3];
 
 0 => int startPos;
 0 => int endPos;
@@ -40,9 +43,22 @@ fun void playRecord(int start, int end){
         
 fun void playInstrument(SndBuf instrument)
 {
-    0 => instrument.pos;
-    0.1::second => now;
+    while (true){
+        0 => instrument.pos;
+        0.23::second => now;
+        0 => instrument.pos;
+        0.13::second => now;
+        0 => instrument.pos;
+        0.13::second => now;
+        
+    }
 }
+
+fun void playDrum(SndBuf drum){
+    0 => drum.pos;
+    0.2::second => now;
+}
+
 
 //fun void playLoop(){
     
@@ -57,12 +73,12 @@ while (true) {
             <<< msg.ascii >>>;  
             if(msg.ascii == 65){ 
                 <<< oneMoreTime.pos() >>>;
-                oneMoreTime.pos() => start[startPos];
+                //oneMoreTime.pos() => start[startPos];
                 1 +=> startPos;         
             }
             else if (msg.ascii == 10){
                 <<< oneMoreTime.pos() >>>;
-                oneMoreTime.pos() => end[endPos];
+                //oneMoreTime.pos() => end[endPos];
                 1 +=> endPos;                
             }
             
@@ -84,11 +100,11 @@ while (true) {
             }
             else if (msg.ascii == 76)
             {
-                playInstrument(hihat);
+                spork~playInstrument(hihat);
             }
             else if (msg.ascii == 77)
             {
-                playInstrument(kick);
+                spork~playDrum(kick);
             }
             //else if (msg.ascii == 86)
             //{
