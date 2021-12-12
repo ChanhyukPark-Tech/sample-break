@@ -6,7 +6,7 @@ SndBuf kick => dac;
 
 Hid hid;
 HidMsg msg;
-1 => int device;
+0 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
@@ -36,7 +36,7 @@ fun void playRecord(int start, int end){
     start => oneMoreTime.pos;
    // 0.97 => oneMoreTime.rate;
     end - start => int len;
-    len::samp => now;
+    len::samp - 5000::samp => now;
     oneMoreTime.samples() => oneMoreTime.pos;
 }
         
@@ -60,6 +60,7 @@ fun void playDrum(SndBuf drum){
 
 
 fun void playSequence(int start[] , int end[]){
+    playRecord(start[0] ,end[0]);
     while(true){
                 playRecord(start[1],end[1]);
                 playRecord(start[1],end[1]);
@@ -82,7 +83,7 @@ fun void playSequence(int start[] , int end[]){
 //fun void playLoop(){
     
 
-// z x c => scale z x c x x x z x x x z x x x z c c c c c c c c z
+// z x c => scale z x c x x x z x x x z x x x z c c c c c c c  z
 
 while (true) {
     
