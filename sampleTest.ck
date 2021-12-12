@@ -28,7 +28,7 @@ hihat.samples() => hihat.pos;
 
 
 // z x c => scale z x c x x x z x x x z x x x z c c c c c c c c z
-
+oneMoreTime.rate(0.25); 
 while (true) {
     
     hid => now;

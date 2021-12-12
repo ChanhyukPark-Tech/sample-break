@@ -12,8 +12,8 @@ if(!hid.openKeyboard(device)){
 }
 
 
-int start[3];
-int end[3];
+[292432,401379,489300] @=> int start[];
+[340000,446500,513700] @=> int end[];
 
 0 => int startPos;
 0 => int endPos;
@@ -32,7 +32,7 @@ hihat.samples() => hihat.pos;
 
 fun void playRecord(int start, int end){
     start => oneMoreTime.pos;
-    0.96 => oneMoreTime.rate;
+   // 0.97 => oneMoreTime.rate;
     end - start => int len;
     len::samp => now;
     oneMoreTime.samples() => oneMoreTime.pos;
@@ -42,6 +42,26 @@ fun void playInstrument(SndBuf instrument)
 {
     0 => instrument.pos;
     0.1::second => now;
+}
+
+fun void playSequence(int start[] , int end[]){
+    while(true){
+                playRecord(start[1],end[1]);
+                playRecord(start[1],end[1]);
+
+                playRecord(start[1],end[1]);
+
+                playRecord(start[0],end[0]);
+        
+                if(Math.random2(1,4) == 2){
+                    playRecord(start[2],end[2]);
+                    playRecord(start[2],end[2]);
+                    playRecord(start[2],end[2]);
+                    playRecord(start[2],end[2]);
+
+                }
+
+    }
 }
 
 //fun void playLoop(){
@@ -54,15 +74,14 @@ while (true) {
     hid => now;
     while (hid.recv(msg)) {
         if (msg.isButtonDown()) {  
-            <<< msg.ascii >>>;  
             if(msg.ascii == 65){ 
-                <<< oneMoreTime.pos() >>>;
-                oneMoreTime.pos() => start[startPos];
+                <<< "sample",startPos+1," startPos : ", oneMoreTime.pos() >>>;
+               // oneMoreTime.pos() => start[startPos];
                 1 +=> startPos;         
             }
             else if (msg.ascii == 10){
-                <<< oneMoreTime.pos() >>>;
-                oneMoreTime.pos() => end[endPos];
+                <<< "sample",endPos+1," endPos : ", oneMoreTime.pos() >>>;
+              //  oneMoreTime.pos() => end[endPos];
                 1 +=> endPos;                
             }
             
@@ -82,6 +101,11 @@ while (true) {
             {
                 playRecord(start[2], end[2]);
             }
+            else if(msg.ascii == 48)
+            {
+               spork ~ playSequence(start,end);
+            }
+            
             else if (msg.ascii == 76)
             {
                 playInstrument(hihat);
