@@ -14,7 +14,6 @@ if(!hid.openKeyboard(device)){
 
 int start[3];
 int end[3];
-<<< start[0] , start[1],start[2]>>>;
 
 0 => int startPos;
 0 => int endPos;
@@ -33,7 +32,7 @@ hihat.samples() => hihat.pos;
 
 fun void playRecord(int start, int end){
     start => oneMoreTime.pos;
-    //0.96 => oneMoreTime.rate;
+    0.96 => oneMoreTime.rate;
     end - start => int len;
     len::samp => now;
     oneMoreTime.samples() => oneMoreTime.pos;
@@ -47,6 +46,8 @@ fun void playInstrument(SndBuf instrument)
 
 //fun void playLoop(){
     
+
+// z x c => scale z x c x x x z x x x z x x x z c c c c c c c c z
 
 while (true) {
     
@@ -64,18 +65,22 @@ while (true) {
                 oneMoreTime.pos() => end[endPos];
                 1 +=> endPos;                
             }
+            
+            // 6s ~ 7s , 7.8s ~ 9.0s , 10s ~ 10.7s  
             else if (msg.ascii == 90)
             {
-                spork~playRecord(start[0], end[0]);
+                playRecord(start[0], end[0]);
             }
+            
+           
             else if (msg.ascii == 88)
             {
-                spork~playRecord(start[1], end[1]);
+                playRecord(start[1], end[1]);
             }
             
             else if (msg.ascii == 67)
             {
-                spork~playRecord(start[2], end[2]);
+                playRecord(start[2], end[2]);
             }
             else if (msg.ascii == 76)
             {
