@@ -6,12 +6,12 @@ if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
 }
-0 => int start1;
-0 => int finish1;
-0 => int start2;
-0 => int finish2;
-0 => int start3;
-0 => int finish3;
+181400 => int start1;
+201600 => int finish1;
+263000 => int start2;
+319000 => int finish2;
+1134000 => int start3;
+1177500 => int finish3;
 
 SndBuf toxic => dac;
 
@@ -23,13 +23,38 @@ me.dir() + "/tere.wav" => toxic.read;
 
 
 0 => toxic.pos;
+fun void playRecord(int start, int end){
+    start => toxic.pos;
+    end - start => int len;
+    len::samp - 5000::samp => now;
+    toxic.samples() => toxic.pos;
+}
 
+fun void playRecordHalf(int start,int end){
+    start => toxic.pos;
+    (end - start) / 2  => int len;
+    len::samp - 2500::samp => now;
+    toxic.samples() => toxic.pos;
+}
 
+fun void playRecordHalfReverse(int start,int end){
+    -0.93 => toxic.rate;
+    end => toxic.pos;
+    (end - start) / 2  => int len;
+    len::samp - 2500::samp => now;
+    toxic.samples() => toxic.pos;
+}
+        
+// dfg as dfg as 
+0.93 => toxic.rate;
 while (true) {
     hid => now;
     while (hid.recv(msg)) {
         if (msg.isButtonDown()) {
-            <<< msg.ascii >>> ;
+            if(msg.ascii == 87){
+                <<<toxic.pos()>>>;
+            }
+            
             if(msg.ascii == 49){
                 <<< toxic.pos() >>>;
                 toxic.pos() => start1;
@@ -44,36 +69,36 @@ while (true) {
             }else if (msg.ascii == 54){
                 toxic.pos() => finish3;
             }
-            1.0 => toxic.rate;
+            0.93 => toxic.rate;
             if(msg.ascii == 65){
-                <<< "sample1", finish1,start1 >>>;
-                start1 => toxic.pos;
-                (finish1 - start1)::samp => now;
-                toxic.samples() => toxic.pos;
+                <<< "This is first sample ! " >>>;
+                playRecord(start1,finish1);
             }
             
             if(msg.ascii == 83){
-                <<< "sample2", finish2,start2 >>>;
-                start2 => toxic.pos;
-                (finish2 - start2)::samp => now;
-                toxic.samples() => toxic.pos;
+                                <<< "This is second sample ! " >>>;
+
+                playRecord(start2,finish2);
             }
             
             //1147994 1185000
             if(msg.ascii == 68){
+                                <<< "This is third sample first half ! " >>>;
+
                 <<< "sample3", finish3,start3 >>>;
-                start3 => toxic.pos;
-                (finish3 - start3)::samp / 2 => now;
-                toxic.samples() => toxic.pos;
+                playRecordHalf(start3,finish3);
+                
             }
             if(msg.ascii == 70){
-                -1.0 => toxic.rate;
-                finish3 => toxic.pos;
-                (finish3 - start3)::samp / 2 => now;
-                toxic.samples() => toxic.pos;
+                                <<< "This is third sample second half reverse ! " >>>;
+
+                playRecordHalfReverse(start3,finish3);
+                
             }if(msg.ascii == 71){
-                (start3 + finish3) / 2 - 10000  => toxic.pos;
-                (finish3 - start3)::samp / 2 + 10000::samp => now;
+                                <<< "This is third sample second half  ! " >>>;
+
+                (start3 + finish3) / 2 - 5000  => toxic.pos;
+                (finish3 - start3)::samp / 2 => now;
                 toxic.samples() => toxic.pos;
             }
         }

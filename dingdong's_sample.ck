@@ -29,8 +29,8 @@ me.dir() + "/kick.wav" => kick.read;
 kick.samples() => kick.pos;
 hihat.samples() => hihat.pos;
 0 => oneMoreTime.pos;
-0.3 => hihat.gain;
-1.0 => kick.gain;
+0.5 => hihat.gain;
+1.5 => kick.gain;
 
 fun void playRecord(int start, int end){
     start => oneMoreTime.pos;
@@ -44,11 +44,11 @@ fun void playInstrument(SndBuf instrument)
 {
     while (true){
         0 => instrument.pos;
-        0.24::second => now;
+        0.23::second => now;
         0 => instrument.pos;
-        0.14::second => now;
+        0.13::second => now;
         0 => instrument.pos;
-        0.14::second => now;
+        0.13::second => now;
         
     }
 }
@@ -104,17 +104,18 @@ while (true) {
             // 6s ~ 7s , 7.8s ~ 9.0s , 10s ~ 10.7s  
             else if (msg.ascii == 90)
             {
+                <<< "This is first sample ! " >>>;
                 playRecord(start[0], end[0]);
             }
-            
-           
             else if (msg.ascii == 88)
             {
+               <<< "This is second sample ! " >>>;
                 playRecord(start[1], end[1]);
             }
             
             else if (msg.ascii == 67)
             {
+                <<< "This is third sample ! " >>>;
                 playRecord(start[2], end[2]);
             }
             else if(msg.ascii == 48)
