@@ -1,9 +1,9 @@
 OscOut oout;
-1979 => int port;
-oout.dest("192.168.0.3", port);
+2580 => int port;
+oout.dest("192.168.0.25", port);
 Hid hid;
 HidMsg msg;
-0 => int device;
+1 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
