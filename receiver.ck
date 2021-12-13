@@ -1,5 +1,5 @@
 OscIn oin;
-1979 => oin.port;
+2580 => oin.port;
 oin.addAddress("/chuckie/osctest");
 OscMsg msg;
 0 => int count;
