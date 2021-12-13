@@ -6,7 +6,7 @@ SndBuf kick => dac;
 
 Hid hid;
 HidMsg msg;
-0 => int device;
+1 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
