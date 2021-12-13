@@ -41,4 +41,34 @@ public class Play{
             }             
         }        
     }
+    
+    
+    fun void playPiano(){
+      Rhodey piano => dac;
+      
+      Std.mtof(66) => piano.freq;
+       1 => piano.noteOn;
+        
+      0.4::second => now;
+        1 => piano.noteOff;
+        
+        Std.mtof(64) => piano.freq;
+       1 => piano.noteOn;
+        
+      0.4::second => now;
+        1 => piano.noteOff;
+        
+        Std.mtof(62) => piano.freq;
+       1 => piano.noteOn;
+        
+      0.2::second => now;
+        1 => piano.noteOff;
+        
+        Std.mtof(59) => piano.freq;
+       1 => piano.noteOn;
+        
+      0.4::second => now;
+        1 => piano.noteOff;
+        
+    }
 }

@@ -9,7 +9,7 @@ me.dir() + "/kick.wav" => kick.read;
 
 Hid hid;
 HidMsg msg;
-1 => int device;
+0 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
@@ -39,6 +39,7 @@ while (true) {
     hid => now;
     while (hid.recv(msg)) {
         if (msg.isButtonDown()) {  
+            <<< msg.ascii >>>;
             if(msg.ascii == 65){ 
                 <<< "sample",startPos+1," startPos : ", oneMoreTime.pos() >>>;
                // oneMoreTime.pos() => start[startPos];
@@ -79,6 +80,10 @@ while (true) {
             else if (msg.ascii == 77)
             {
                 spork~p.playDrum(kick);
+            }
+            else if (msg.ascii == 49)
+            {
+                spork~p.playPiano();
             }
             
         }
