@@ -42,33 +42,32 @@ public class Play{
         }        
     }
     
+    [66,64,62] @=> int melody1[];
+    [62,61,59,59] @=> int melody2[];
+    [59,57,55] @=> int melody3[];
     
     fun void playPiano(){
-      Rhodey piano => dac;
+      Rhodey piano[3] => dac;
       
-      Std.mtof(66) => piano.freq;
-       1 => piano.noteOn;
-        
+      for (0 => int i; i < 3; i++)
+      {
+          1 => piano[0].noteOn;
+          1 => piano[1].noteOn;
+          1 => piano[2].noteOn;
+          Std.mtof(melody1[i]) => piano[0].freq;
+          Std.mtof(melody2[i]) => piano[1].freq;
+          Std.mtof(melody3[i]) => piano[2].freq;
+          if (i == 2)
+              0.2::second => now;
+          else
+              0.4::second => now;
+          1 => piano[0].noteOff;
+          1 => piano[1].noteOff;
+          1 => piano[2].noteOff;
+      }
+      1 => piano[0].noteOn;
+      Std.mtof(melody2[3]) => piano[0].freq;
       0.4::second => now;
-        1 => piano.noteOff;
-        
-        Std.mtof(64) => piano.freq;
-       1 => piano.noteOn;
-        
-      0.4::second => now;
-        1 => piano.noteOff;
-        
-        Std.mtof(62) => piano.freq;
-       1 => piano.noteOn;
-        
-      0.2::second => now;
-        1 => piano.noteOff;
-        
-        Std.mtof(59) => piano.freq;
-       1 => piano.noteOn;
-        
-      0.4::second => now;
-        1 => piano.noteOff;
-        
+      1 => piano[0].noteOff;  
     }
 }
