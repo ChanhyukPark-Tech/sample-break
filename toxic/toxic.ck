@@ -1,14 +1,20 @@
 
 Hid hid;
 HidMsg msg;
-0 => int device;
+1 => int device;
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
 }
 
 SndBuf kick => dac; 
+SndBuf hihat => dac;
+SndBuf kick2 => dac;
 me.dir() + "../kick.wav" => kick.read;
+me.dir() + "../kick_01.wav" => kick2.read;
+me.dir() + "../hihat_02.wav" => hihat.read;
+
+
 
 181400 => int start1;
 201600 => int finish1;
@@ -23,7 +29,8 @@ SndBuf toxicVocal => dac;
 int samples[][];
 
 kick.samples() => kick.pos;
-1.5 => kick.gain;
+hihat.samples() => hihat.pos;
+1.0 => kick.gain;
 
 me.dir() + "/tere.wav" => toxic.read;
 me.dir() + "/toxicVocal.wav" => toxicVocal.read;
@@ -68,16 +75,38 @@ fun void playRecordHalfReverse(int start,int end){
 }
 
 fun void playDrum(SndBuf drum){
-    0 => drum.pos;
-    0.4::second => now;
-    0 => drum.pos;
-    0.2::second => now;
-    0 => drum.pos;
-    0.6::second => now;
-    0 => drum.pos;
-    0.4::second => now;
+    while(true){
+        0 => drum.pos;
+        0.4::second => now;
+        0 => drum.pos;
+        0.2::second => now;
+        0 => drum.pos;
+        0.6::second => now;
+        0 => drum.pos;
+        0.4::second => now;
+        drum.samples() => drum.pos;
+        0.065::second => now;
+    }
 }
-        
+
+fun void playDrum2(SndBuf kick){
+    while(true){
+        0 => kick.pos;
+        0.4::second => now;
+        kick.samples() => kick.pos;
+        0.2::second => now;
+        0 => kick.pos;
+        0.6::second => now;
+        kick.samples() => kick.pos;
+        0.465::second => now;
+    }
+}
+
+fun void playHihat(SndBuf hihat){
+    0 => hihat.pos;
+    0.2::second => now;
+}
+ 
 // dfg as dfg as 
 0.98 => toxic.rate;
 while (true) {
@@ -139,7 +168,12 @@ while (true) {
             }
             if(msg.ascii == 48 ){
                 0 => toxicVocal.pos;
-                
+            }
+            if (msg.ascii == 76) {
+                spork~playDrum(kick);
+            }
+            if (msg.ascii == 77) {
+                spork~playDrum2(kick2);
             }
         }
             
