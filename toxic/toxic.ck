@@ -1,7 +1,7 @@
 
 Hid hid;
 HidMsg msg;
-0 => int device;
+1 => int device;
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
@@ -25,20 +25,32 @@ me.dir() + "/tere.wav" => toxic.read;
 0 => toxic.pos;
 fun void playRecord(int start, int end){
     start => toxic.pos;
+    1.1 => toxic.rate;
     end - start => int len;
     len::samp - 5000::samp => now;
     toxic.samples() => toxic.pos;
-}
+}ㅇㄹㅎ
 
 fun void playRecordHalf(int start,int end){
     start => toxic.pos;
-    (end - start) / 2  => int len;
+    1.3 => toxic.rate;
+    (end - start) / (2) + 500  => int len;
     len::samp - 2500::samp => now;
     toxic.samples() => toxic.pos;
 }
 
+fun void playReverse2(int start, int end) {
+    end + 500 => toxic.pos;
+    -1.3 => toxic.rate;
+    (end - start) / (2) + 500 => int len;
+    len::samp - 2500::samp => now;
+    0 => toxic.pos;
+}
+
 fun void playRecordHalfReverse(int start,int end){
-    -0.90 => toxic.rate;
+    
+    //-0.90 => toxic.rate;
+    1.1=> toxic.rate;
     end => toxic.pos;
     (end - start) / 2  => int len;
     len::samp - 2500::samp => now;
@@ -51,6 +63,7 @@ while (true) {
     hid => now;
     while (hid.recv(msg)) {
         if (msg.isButtonDown()) {
+            <<< msg.ascii >>>;
             if(msg.ascii == 87){
                 <<<toxic.pos()>>>;
             }
@@ -92,14 +105,16 @@ while (true) {
             if(msg.ascii == 70){
                                 <<< "This is third sample second half reverse ! " >>>;
 
-                playRecordHalfReverse(start3,finish3);
+                //playRecordHalfReverse(start3,finish3);
+                playReverse2(start3,finish3);
                 
             }if(msg.ascii == 71){
                                 <<< "This is third sample second half  ! " >>>;
-            0.90 => toxic.rate;
+            1.3 => toxic.rate;
                 ((start3 + finish3) / 2 ) - 500  => toxic.pos;
-                (finish3 - start3)::samp / 2  => now;
+                (finish3 - start3 - 10000)::samp / 2  => now;
                 toxic.samples() => toxic.pos;
+         
             }
         }
             
