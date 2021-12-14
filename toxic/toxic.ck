@@ -6,6 +6,10 @@ if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
 }
+
+SndBuf kick => dac; 
+me.dir() + "../kick.wav" => kick.read;
+
 181400 => int start1;
 201600 => int finish1;
 263000 => int start2;
@@ -17,7 +21,8 @@ SndBuf toxic => dac;
 
 int samples[][];
 
-
+kick.samples() => kick.pos;
+1.5 => kick.gain;
 
 me.dir() + "/tere.wav" => toxic.read;
 
@@ -35,7 +40,7 @@ fun void playRecordHalf(int start,int end){
     start => toxic.pos;
     1.3 => toxic.rate;
     (end - start) / (2) + 500  => int len;
-    len::samp - 2500::samp => now;
+    len::samp - 5000::samp => now;
     toxic.samples() => toxic.pos;
 }
 
@@ -43,7 +48,7 @@ fun void playReverse2(int start, int end) {
     end + 500 => toxic.pos;
     -1.3 => toxic.rate;
     (end - start) / (2) + 500 => int len;
-    len::samp - 2500::samp => now;
+    len::samp - 5000::samp => now;
     0 => toxic.pos;
 }
 
@@ -53,8 +58,19 @@ fun void playRecordHalfReverse(int start,int end){
     1.1=> toxic.rate;
     end => toxic.pos;
     (end - start) / 2  => int len;
-    len::samp - 2500::samp => now;
+    len::samp - 5000::samp => now;
     toxic.samples() => toxic.pos;
+}
+
+fun void playDrum(SndBuf drum){
+    0 => drum.pos;
+    0.4::second => now;
+    0 => drum.pos;
+    0.2::second => now;
+    0 => drum.pos;
+    0.6::second => now;
+    0 => drum.pos;
+    0.4::second => now;
 }
         
 // dfg as dfg as 
@@ -112,9 +128,12 @@ while (true) {
                                 <<< "This is third sample second half  ! " >>>;
             1.3 => toxic.rate;
                 ((start3 + finish3) / 2 ) - 500  => toxic.pos;
-                (finish3 - start3 - 10000)::samp / 2  => now;
+                (finish3 - start3 - 10000)::samp / 2  - 2500::samp=> now;
                 toxic.samples() => toxic.pos;
          
+            }
+            if (msg.ascii == 76){
+                playDrum(kick);
             }
         }
             
