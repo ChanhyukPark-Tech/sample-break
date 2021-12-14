@@ -16,10 +16,6 @@ if(!hid.openKeyboard(device)){
     me.exit();
 }
 
-
-//[292432,401379,489300] @=> int start[];
-//[340000,446500,513700] @=> int end[];
-
 [0,0,0] @=> int start[];
 [0,0,0] @=> int end[];
 0 => int startPos;
@@ -33,8 +29,6 @@ hihat.samples() => hihat.pos;
 1.5 => kick.gain;
 
 Play p;
-
-// z x c => scale z x c x x x z x x x z x x x z c c c c c c c  z
 
 while (true) {
     
@@ -52,8 +46,6 @@ while (true) {
                 oneMoreTime.pos() => end[endPos];
                 1 +=> endPos;                
             }
-            
-            // 6s ~ 7s , 7.8s ~ 9.0s , 10s ~ 10.7s  
             else if (msg.ascii == 90)
             {
                 <<< "This is first sample ! " >>>;

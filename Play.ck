@@ -1,7 +1,6 @@
 public class Play{
     fun void playRecord(SndBuf instrument, int start, int end){ 
-        start => instrument.pos;
-        // 0.97 => instrument.rate;       
+        start => instrument.pos;      
         end - start => int len;        
         len::samp - 5000::samp => now;        
         instrument.samples() => instrument.pos;        
