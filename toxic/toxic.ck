@@ -12,9 +12,9 @@ SndBuf kick => dac;
 SndBuf toxic => dac;
 SndBuf toxicVocal => dac;
 
-me.dir() + "../kick.wav" => drum.read;
-me.dir() + "../kick_01.wav" => kick.read;
-me.dir() + "../hihat_02.wav" => hihat.read;
+me.dir() + "/kick.wav" => drum.read;
+me.dir() + "/kick_01.wav" => kick.read;
+me.dir() + "/hihat_02.wav" => hihat.read;
 me.dir() + "/tere.wav" => toxic.read;
 me.dir() + "/toxicVocal.wav" => toxicVocal.read;
 
