@@ -17,9 +17,11 @@ if(!hid.openKeyboard(device)){
 }
 
 
-[292432,401379,489300] @=> int start[];
-[340000,446500,513700] @=> int end[];
+//[292432,401379,489300] @=> int start[];
+//[340000,446500,513700] @=> int end[];
 
+[0,0,0] @=> int start[];
+[0,0,0] @=> int end[];
 0 => int startPos;
 0 => int endPos;
 
@@ -42,12 +44,12 @@ while (true) {
             <<< msg.ascii >>>;
             if(msg.ascii == 65){ 
                 <<< "sample",startPos+1," startPos : ", oneMoreTime.pos() >>>;
-               // oneMoreTime.pos() => start[startPos];
+               oneMoreTime.pos() => start[startPos];
                 1 +=> startPos;         
             }
             else if (msg.ascii == 10){
                 <<< "sample",endPos+1," endPos : ", oneMoreTime.pos() >>>;
-              //  oneMoreTime.pos() => end[endPos];
+                oneMoreTime.pos() => end[endPos];
                 1 +=> endPos;                
             }
             

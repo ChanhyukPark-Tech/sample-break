@@ -1,7 +1,7 @@
 
 Hid hid;
 HidMsg msg;
-1 => int device;
+0 => int device;
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
@@ -18,6 +18,7 @@ me.dir() + "../kick.wav" => kick.read;
 1177500 => int finish3;
 
 SndBuf toxic => dac;
+SndBuf toxicVocal => dac;
 
 int samples[][];
 
@@ -25,6 +26,10 @@ kick.samples() => kick.pos;
 1.5 => kick.gain;
 
 me.dir() + "/tere.wav" => toxic.read;
+me.dir() + "/toxicVocal.wav" => toxicVocal.read;
+
+
+toxicVocal.samples() => toxicVocal.pos;
 
 
 0 => toxic.pos;
@@ -34,11 +39,11 @@ fun void playRecord(int start, int end){
     end - start => int len;
     len::samp - 5000::samp => now;
     toxic.samples() => toxic.pos;
-}ㅇㄹㅎ
+}
 
 fun void playRecordHalf(int start,int end){
     start => toxic.pos;
-    1.3 => toxic.rate;
+    1.1 => toxic.rate;
     (end - start) / (2) + 500  => int len;
     len::samp - 5000::samp => now;
     toxic.samples() => toxic.pos;
@@ -46,7 +51,7 @@ fun void playRecordHalf(int start,int end){
 
 fun void playReverse2(int start, int end) {
     end + 500 => toxic.pos;
-    -1.3 => toxic.rate;
+    -1.0 => toxic.rate;
     (end - start) / (2) + 500 => int len;
     len::samp - 5000::samp => now;
     0 => toxic.pos;
@@ -125,15 +130,16 @@ while (true) {
                 playReverse2(start3,finish3);
                 
             }if(msg.ascii == 71){
-                                <<< "This is third sample second half  ! " >>>;
-            1.3 => toxic.rate;
+                                <<< "This is third sdample second half  ! " >>>;
+            1.0 => toxic.rate;
                 ((start3 + finish3) / 2 ) - 500  => toxic.pos;
-                (finish3 - start3 - 10000)::samp / 2  - 2500::samp=> now;
+                (finish3 - start3 - 3000)::samp / 2  => now;
                 toxic.samples() => toxic.pos;
          
             }
-            if (msg.ascii == 76){
-                playDrum(kick);
+            if(msg.ascii == 48 ){
+                0 => toxicVocal.pos;
+                
             }
         }
             
