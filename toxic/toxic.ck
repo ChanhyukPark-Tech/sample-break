@@ -1,6 +1,5 @@
 Hid hid;
 HidMsg msg;
-
 0 => int device;
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
@@ -158,10 +157,12 @@ while (true) {
                 0 => toxicVocal.pos;
                 <<< "play the vocal" >>>;
             }
+            //l
             if (msg.ascii == 76) {
                 spork~playDrum(drum);
                 <<< "play the drum beat" >>>;
             }
+            //m
             if (msg.ascii == 77) {
                 spork~playKick(kick);
                 <<< "play the kick beat" >>>;
