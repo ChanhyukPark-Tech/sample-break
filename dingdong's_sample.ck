@@ -9,7 +9,7 @@ me.dir() + "/kick.wav" => kick.read;
 
 Hid hid;
 HidMsg msg;
-1 => int device;
+0 => int device;
 
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
