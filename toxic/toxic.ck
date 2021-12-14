@@ -1,7 +1,7 @@
 
 Hid hid;
 HidMsg msg;
-1 => int device;
+0 => int device;
 if(!hid.openKeyboard(device)){
     <<< "Can't open this device!!", "Sorry.">>>;
     me.exit();
@@ -30,6 +30,7 @@ int samples[][];
 
 kick.samples() => kick.pos;
 hihat.samples() => hihat.pos;
+kick2.samples() => kick2.pos;
 1.0 => kick.gain;
 
 me.dir() + "/tere.wav" => toxic.read;
@@ -169,9 +170,11 @@ while (true) {
             if(msg.ascii == 48 ){
                 0 => toxicVocal.pos;
             }
+            //l
             if (msg.ascii == 76) {
                 spork~playDrum(kick);
             }
+            //m
             if (msg.ascii == 77) {
                 spork~playDrum2(kick2);
             }
